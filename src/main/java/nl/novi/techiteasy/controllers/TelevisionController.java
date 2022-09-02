@@ -17,17 +17,17 @@ public class TelevisionController {
     }
 
     @PostMapping("/televisons")
-    public ResponseEntity<Object> addTelevision(@RequestBody String televison) {
+    public ResponseEntity<Object> addTelevision(@RequestBody String television) {
         return ResponseEntity.created();
 
     }
 
     @DeleteMapping("/televisions/{id}")
-    public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
+    public ResponseEntity<Object> deleteTelevision(@PathVariable Long id) {
         return ResponseEntity.noContent();
     }
 
     @PutMapping("/televisons/{id}")
-    public ResponseEntity<Object> updateTelevision(@PathVariable int id, @RequestBody String television) {
+    public ResponseEntity<Object> updateTelevision(@PathVariable Long id, @RequestBody String television) {
         return ResponseEntity.noContent();
 }
