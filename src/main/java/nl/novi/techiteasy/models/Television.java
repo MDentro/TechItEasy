@@ -3,57 +3,26 @@ package nl.novi.techiteasy.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name="televisions")
 public class Television {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "type")
     private String type;
-
-    @Column(name = "brand")
     private String brand;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "price")
     private Double price;
-
-    @Column(name = "available_size")
     private Double availableSize;
-
-    @Column(name = "refresh_rate")
     private Double refreshRate;
-
-    @Column(name = "screen_type")
     private String screenType;
-
-    @Column(name = "screen_quality")
     private String screenQuality;
-
-    @Column(name = "smart_tv")
     private Boolean smartTv;
-
-    @Column(name = "wifi")
     private Boolean wifi;
-
-    @Column(name = "voice_control")
     private Boolean voiceControl;
-
-    @Column(name = "hdr")
     private Boolean hdr;
-
-    @Column(name = "bluetooth")
     private Boolean bluetooth;
-
-    @Column(name = "ambilight")
     private Boolean ambiLight;
-
-    @Column(name = "original_stock")
     private Integer originalStock;
-
-    @Column(name = "sold")
     private Integer sold;
 
     public Television() {
