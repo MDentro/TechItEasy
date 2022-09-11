@@ -1,52 +1,51 @@
-package nl.novi.techiteasy.models;
+package nl.novi.techiteasy.dtos;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="televisions")
-public class Television {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String type;
-    private String brand;
-    private String name;
-    private Double price;
-    private Double availableSize;
-    private Double refreshRate;
-    private String screenType;
-    private String screenQuality;
-    private Boolean smartTv;
-    private Boolean wifi;
-    private Boolean voiceControl;
-    private Boolean hdr;
-    private Boolean bluetooth;
-    private Boolean ambiLight;
-    private Integer originalStock;
-    private Integer sold;
+public class TelevisionInputDto {
+    public Long id;
+    @NotBlank
+    @Size(min=3, max=40)
+    public String type;
+    @NotBlank
+    @Size(min=3, max=20)
+    public String brand;
+    @NotBlank
+    @Size(min=3, max=20)
+    public String name;
 
-    public Television() {
-    }
+    @Min(value = 0)
+    public Double price;
 
-    public Television(String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
+    @Min(value = 0)
+    public Double availableSize;
+    @Min(value = 0)
+    public Double refreshRate;
+    @NotBlank
+    @Size(min=3, max=20)
+    public String screenType;
+    @NotBlank
+    @Size(min=3, max=20)
+    public String screenQuality;
+    @NotNull
+    public Boolean smartTv;
+    @NotNull
+    public Boolean wifi;
+    @NotNull
+    public Boolean voiceControl;
+    @NotNull
+    public Boolean hdr;
+    @NotNull
+    public Boolean bluetooth;
+    @NotNull
+    public Boolean ambiLight;
+
+    public Integer originalStock;
+
+    public Integer sold;
 
     public Long getId() {
         return id;
@@ -186,7 +185,7 @@ public class Television {
 
     @Override
     public String toString() {
-        return "Television{" +
+        return "TelevisionInputDto{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
                 ", brand='" + brand + '\'' +
