@@ -1,51 +1,42 @@
-package nl.novi.techiteasy.models;
+package nl.novi.techiteasy.dtos;
 
-import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="televisions")
-public class Television {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TelevisionInputDto {
     private Long id;
+    @Size(min = 3, max = 40)
     private String type;
+    @Size(min = 3, max = 20)
     private String brand;
+    @Size(min = 3, max = 20)
     private String name;
+    @Min(value = 0)
     private Double price;
+    @Min(value = 0)
     private Double availableSize;
+    @Min(value = 0)
     private Double refreshRate;
+    @Size(min = 3, max = 20)
     private String screenType;
+    @Size(min = 3, max = 20)
     private String screenQuality;
+    @NotNull
     private Boolean smartTv;
+    @NotNull
     private Boolean wifi;
+    @NotNull
     private Boolean voiceControl;
+    @NotNull
     private Boolean hdr;
+    @NotNull
     private Boolean bluetooth;
+    @NotNull
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
-
-    public Television() {
-    }
-
-    public Television(String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
 
     public Long getId() {
         return id;
@@ -185,7 +176,7 @@ public class Television {
 
     @Override
     public String toString() {
-        return "Television{" +
+        return "TelevisionInputDto{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
                 ", brand='" + brand + '\'' +
