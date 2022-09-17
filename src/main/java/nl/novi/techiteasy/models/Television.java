@@ -1,7 +1,6 @@
 package nl.novi.techiteasy.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="televisions")

@@ -6,46 +6,37 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class TelevisionInputDto {
-    public Long id;
-    @NotBlank
-    @Size(min=3, max=40)
-    public String type;
-    @NotBlank
-    @Size(min=3, max=20)
-    public String brand;
-    @NotBlank
-    @Size(min=3, max=20)
-    public String name;
-
+    private Long id;
+    @Size(min = 3, max = 40)
+    private String type;
+    @Size(min = 3, max = 20)
+    private String brand;
+    @Size(min = 3, max = 20)
+    private String name;
     @Min(value = 0)
-    public Double price;
-
+    private Double price;
     @Min(value = 0)
-    public Double availableSize;
+    private Double availableSize;
     @Min(value = 0)
-    public Double refreshRate;
-    @NotBlank
-    @Size(min=3, max=20)
-    public String screenType;
-    @NotBlank
-    @Size(min=3, max=20)
-    public String screenQuality;
+    private Double refreshRate;
+    @Size(min = 3, max = 20)
+    private String screenType;
+    @Size(min = 3, max = 20)
+    private String screenQuality;
     @NotNull
-    public Boolean smartTv;
+    private Boolean smartTv;
     @NotNull
-    public Boolean wifi;
+    private Boolean wifi;
     @NotNull
-    public Boolean voiceControl;
+    private Boolean voiceControl;
     @NotNull
-    public Boolean hdr;
+    private Boolean hdr;
     @NotNull
-    public Boolean bluetooth;
+    private Boolean bluetooth;
     @NotNull
-    public Boolean ambiLight;
-
-    public Integer originalStock;
-
-    public Integer sold;
+    private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
 
     public Long getId() {
         return id;

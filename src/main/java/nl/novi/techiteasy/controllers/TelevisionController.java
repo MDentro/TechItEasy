@@ -2,7 +2,7 @@ package nl.novi.techiteasy.controllers;
 
 import nl.novi.techiteasy.dtos.TelevisionDto;
 import nl.novi.techiteasy.dtos.TelevisionInputDto;
-import nl.novi.techiteasy.services.TelevisionServiceImpl;
+import nl.novi.techiteasy.services.TelevisionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,9 +15,9 @@ import java.util.List;
 @RestController
 public class TelevisionController {
 
-    private final TelevisionServiceImpl televisionService;
+    private final TelevisionService televisionService;
 
-    public TelevisionController(TelevisionServiceImpl televisionService) {
+    public TelevisionController(TelevisionService televisionService) {
         this.televisionService = televisionService;
     }
 
@@ -28,7 +28,7 @@ public class TelevisionController {
     }
 
     @GetMapping("/televisions/{id}")
-    public ResponseEntity<Object> getTelvision(@PathVariable Long id) {
+    public ResponseEntity<Object> getTelevision(@PathVariable Long id) {
         TelevisionDto tv = televisionService.getTelevision(id);
         return ResponseEntity.ok().body(tv);
     }
