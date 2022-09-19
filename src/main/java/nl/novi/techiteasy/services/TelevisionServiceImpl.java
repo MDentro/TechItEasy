@@ -3,7 +3,11 @@ package nl.novi.techiteasy.services;
 import nl.novi.techiteasy.dtos.TelevisionDto;
 import nl.novi.techiteasy.dtos.TelevisionInputDto;
 import nl.novi.techiteasy.exceptions.RecordNotFoundException;
+import nl.novi.techiteasy.models.CIModule;
+import nl.novi.techiteasy.models.RemoteController;
 import nl.novi.techiteasy.models.Television;
+import nl.novi.techiteasy.repositories.CIModuleRepository;
+import nl.novi.techiteasy.repositories.RemoteControllerRepository;
 import nl.novi.techiteasy.repositories.TelevisionRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,9 +18,44 @@ import java.util.List;
 @Service
 public class TelevisionServiceImpl implements TelevisionService {
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionServiceImpl(TelevisionRepository televisionRepository) {
+    private final CIModuleRepository ciModuleRepository;
+    private final RemoteControllerService remoteControllerService;
+
+    private final CIModuleService ciModuleService;
+
+    public TelevisionServiceImpl(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModuleRepository ciModuleRepository, RemoteControllerService remoteControllerService, CIModuleService ciModuleService) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
+        this.ciModuleRepository = ciModuleRepository;
+        this.remoteControllerService = remoteControllerService;
+        this.ciModuleService = ciModuleService;
+    }
+
+    @Override
+    public void assignCIModuleToTelevision(Long id, Long input) {
+        if (idPresent(id) && ciModuleRepository.findById(input).isPresent()) {
+            Television tv = televisionRepository.findById(id).get();
+            CIModule ciModule = ciModuleRepository.findById(input).get();
+            tv.setCiModule(ciModule);
+            televisionRepository.save(tv);
+        } else {
+            throw new RecordNotFoundException("One of the id's doesn't exist");
+        }
+    }
+
+
+    @Override
+    public void assignRemoteControllerToTelevision(Long id, Long input) {
+        if (idPresent(id) && remoteControllerRepository.findById(input).isPresent()) {
+            Television tv = televisionRepository.findById(id).get();
+            RemoteController remoteController = remoteControllerRepository.findById(input).get();
+            tv.setRemoteController(remoteController);
+            televisionRepository.save(tv);
+        } else {
+            throw new RecordNotFoundException("One of the id's doesn't exist");
+        }
     }
 
     @Override
@@ -28,14 +67,24 @@ public class TelevisionServiceImpl implements TelevisionService {
             return addToList(televisionList);
         }
     }
+
     @Override
     public TelevisionDto getTelevision(Long id) {
         if (idPresent(id)) {
-            return fromTelevision(televisionRepository.findById(id).get());
+            Television tv = televisionRepository.findById(id).get();
+            TelevisionDto dto = fromTelevision(tv);
+            if (tv.getRemoteController() != null) {
+                dto.setRemoteControllerDto(remoteControllerService.fromRemoteController(tv.getRemoteController()));
+            }
+            if (tv.getCiModule() != null) {
+                dto.setCiModuleDto(ciModuleService.fromCIModule(tv.getCiModule()));
+            }
+            return dto;
         } else {
             throw new RecordNotFoundException("This television with id " + id + " doesn't exist.");
         }
     }
+
     @Override
     public TelevisionDto saveTelevision(TelevisionInputDto television) {
         Television tv = toTelevision(television);
@@ -44,15 +93,17 @@ public class TelevisionServiceImpl implements TelevisionService {
 
         return savedTv;
     }
+
     @Override
     public TelevisionDto updateTelevision(TelevisionInputDto updateTelevision, Long id) {
         if (idPresent(id)) {
-           Television tv = saveChanges(id, updateTelevision);
+            Television tv = saveChanges(id, updateTelevision);
             return fromTelevision(tv);
         } else {
             throw new RecordNotFoundException("Could not find tv with id: " + id);
         }
     }
+
     @Override
     public void deleteTelevision(Long id) {
         try {
@@ -61,6 +112,7 @@ public class TelevisionServiceImpl implements TelevisionService {
             throw new RecordNotFoundException("Cannot find television with id: " + id);
         }
     }
+
     @Override
     public Television saveChanges(Long id, TelevisionInputDto updateTelevision) {
         Television tv = televisionRepository.findById(id).get();
@@ -115,6 +167,7 @@ public class TelevisionServiceImpl implements TelevisionService {
         }
         return televisionRepository.save(tv);
     }
+
     @Override
     public List<TelevisionDto> addToList(List<Television> televisionList) {
         List televisionResult = new ArrayList<>();
@@ -124,14 +177,17 @@ public class TelevisionServiceImpl implements TelevisionService {
         }
         return televisionResult;
     }
+
     @Override
     public boolean emptyList(List televisionList) {
         return televisionList.size() <= 0;
     }
+
     @Override
     public boolean idPresent(Long id) {
         return televisionRepository.findById(id).isPresent();
     }
+
     @Override
     public TelevisionDto fromTelevision(Television television) {
         var dto = new TelevisionDto();
@@ -153,8 +209,10 @@ public class TelevisionServiceImpl implements TelevisionService {
         dto.setOriginalStock(television.getOriginalStock());
         dto.setSold(television.getSold());
 
+
         return dto;
     }
+
     @Override
     public Television toTelevision(TelevisionInputDto dto) {
         var television = new Television();

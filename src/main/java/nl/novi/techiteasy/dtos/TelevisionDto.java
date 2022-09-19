@@ -19,6 +19,11 @@ public class TelevisionDto {
     private Integer originalStock;
     private Integer sold;
 
+    private RemoteControllerDto remoteControllerDto;
+
+    private CIModuleDto ciModuleDto;
+
+
     public Long getId() {
         return id;
     }
@@ -155,26 +160,19 @@ public class TelevisionDto {
         this.sold = sold;
     }
 
-    @Override
-    public String toString() {
-        return "TelevisionDto{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", availableSize=" + availableSize +
-                ", refreshRate=" + refreshRate +
-                ", screenType='" + screenType + '\'' +
-                ", screenQuality='" + screenQuality + '\'' +
-                ", smartTv=" + smartTv +
-                ", wifi=" + wifi +
-                ", voiceControl=" + voiceControl +
-                ", hdr=" + hdr +
-                ", bluetooth=" + bluetooth +
-                ", ambiLight=" + ambiLight +
-                ", originalStock=" + originalStock +
-                ", sold=" + sold +
-                '}';
+    public RemoteControllerDto getRemoteControllerDto() {
+        return remoteControllerDto;
+    }
+
+    public void setRemoteControllerDto(RemoteControllerDto remoteControllerDto) {
+        this.remoteControllerDto = remoteControllerDto;
+    }
+
+    public CIModuleDto getCiModuleDto() {
+        return ciModuleDto;
+    }
+
+    public void setCiModuleDto(CIModuleDto ciModuleDto) {
+        this.ciModuleDto = ciModuleDto;
     }
 }
