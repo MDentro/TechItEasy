@@ -7,3 +7,6 @@ INSERT INTO televisions (id, type, brand, name, price, available_size, refresh_r
 
 INSERT INTO remotecontrollers (id, compatible_with, battery_type, name, brand, price, original_stock) VALUES (100, 'Special compatible', 'AAA', 'Special remote controller', 'Special brand', 20, 5);
 INSERT INTO cimodules ( id, name, price) VALUES (10, 'testcimodule', 50), (11, 'testcimodule2', 50);
+
+UPDATE televisions SET remote_controller_id=100 WHERE id=1003;
+UPDATE televisions SET ci_module_id=10 WHERE id=1003;

@@ -30,7 +30,5 @@ public interface TelevisionService {
 
     boolean idPresent(Long id);
 
-    TelevisionDto fromTelevision(Television television);
 
-    Television toTelevision(TelevisionInputDto dto);
 }

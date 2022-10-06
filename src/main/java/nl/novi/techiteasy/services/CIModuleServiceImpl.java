@@ -6,7 +6,7 @@ import nl.novi.techiteasy.models.CIModule;
 import nl.novi.techiteasy.repositories.CIModuleRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import static nl.novi.techiteasy.dtos.CIModuleDto.fromCIModule;
 
 
 @Service
@@ -28,24 +28,7 @@ public class CIModuleServiceImpl implements CIModuleService {
         }
     }
 
-    @Override
-    public CIModuleDto fromCIModule(CIModule ciModule) {
-        var dto = new CIModuleDto();
-        dto.setId(ciModule.getId());
-        dto.setName(ciModule.getName());
-        dto.setPrice(ciModule.getPrice());
 
-        return dto;
-    }
-
-    @Override
-    public CIModule toCIModule(CIModuleDto dto) {
-        var ciModule = new CIModule();
-        ciModule.setName(dto.getName());
-        ciModule.setPrice(dto.getPrice());
-
-        return ciModule;
-    }
 
 
 }

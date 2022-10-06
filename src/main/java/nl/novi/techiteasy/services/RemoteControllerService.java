@@ -7,9 +7,5 @@ import nl.novi.techiteasy.models.RemoteController;
 public interface RemoteControllerService {
     RemoteControllerDto createRemoteController(RemoteControllerInputDto remoteControllerInputDto);
 
-    RemoteControllerDto fromRemoteController(RemoteController remoteController);
-
-    RemoteController toRemoteController(RemoteControllerInputDto dto);
-
-    RemoteControllerDto getRemoteControllerById(Long id);
+     RemoteControllerDto getRemoteControllerById(Long id);
 }

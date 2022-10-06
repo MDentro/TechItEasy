@@ -15,22 +15,23 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nl.novi.techiteasy.dtos.CIModuleDto.fromCIModule;
+import static nl.novi.techiteasy.dtos.RemoteControllerDto.fromRemoteController;
+import static nl.novi.techiteasy.dtos.TelevisionDto.fromTelevision;
+import static nl.novi.techiteasy.dtos.TelevisionDto.toTelevision;
+
 @Service
 public class TelevisionServiceImpl implements TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
 
     private final CIModuleRepository ciModuleRepository;
-    private final RemoteControllerService remoteControllerService;
 
-    private final CIModuleService ciModuleService;
 
-    public TelevisionServiceImpl(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModuleRepository ciModuleRepository, RemoteControllerService remoteControllerService, CIModuleService ciModuleService) {
+    public TelevisionServiceImpl(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModuleRepository ciModuleRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
         this.ciModuleRepository = ciModuleRepository;
-        this.remoteControllerService = remoteControllerService;
-        this.ciModuleService = ciModuleService;
     }
 
     @Override
@@ -74,10 +75,10 @@ public class TelevisionServiceImpl implements TelevisionService {
             Television tv = televisionRepository.findById(id).get();
             TelevisionDto dto = fromTelevision(tv);
             if (tv.getRemoteController() != null) {
-                dto.setRemoteControllerDto(remoteControllerService.fromRemoteController(tv.getRemoteController()));
+                dto.setRemoteControllerDto(fromRemoteController(tv.getRemoteController()));
             }
             if (tv.getCiModule() != null) {
-                dto.setCiModuleDto(ciModuleService.fromCIModule(tv.getCiModule()));
+                dto.setCiModuleDto(fromCIModule(tv.getCiModule()));
             }
             return dto;
         } else {
@@ -188,51 +189,5 @@ public class TelevisionServiceImpl implements TelevisionService {
         return televisionRepository.findById(id).isPresent();
     }
 
-    @Override
-    public TelevisionDto fromTelevision(Television television) {
-        var dto = new TelevisionDto();
-        dto.setId(television.getId());
-        dto.setType(television.getType());
-        dto.setBrand(television.getBrand());
-        dto.setName(television.getName());
-        dto.setPrice(television.getPrice());
-        dto.setAvailableSize(television.getAvailableSize());
-        dto.setRefreshRate(television.getRefreshRate());
-        dto.setScreenType(television.getScreenType());
-        dto.setScreenQuality(television.getScreenQuality());
-        dto.setSmartTv(television.getWifi());
-        dto.setWifi(television.getWifi());
-        dto.setVoiceControl(television.getVoiceControl());
-        dto.setHdr(television.getHdr());
-        dto.setBluetooth(television.getBluetooth());
-        dto.setAmbiLight(television.getAmbiLight());
-        dto.setOriginalStock(television.getOriginalStock());
-        dto.setSold(television.getSold());
 
-
-        return dto;
-    }
-
-    @Override
-    public Television toTelevision(TelevisionInputDto dto) {
-        var television = new Television();
-        television.setType(dto.getType());
-        television.setBrand(dto.getBrand());
-        television.setName(dto.getName());
-        television.setPrice(dto.getPrice());
-        television.setAvailableSize(dto.getAvailableSize());
-        television.setRefreshRate(dto.getRefreshRate());
-        television.setScreenType(dto.getScreenType());
-        television.setScreenQuality(dto.getScreenQuality());
-        television.setSmartTv(dto.getSmartTv());
-        television.setWifi(dto.getWifi());
-        television.setVoiceControl(dto.getVoiceControl());
-        television.setHdr(dto.getHdr());
-        television.setBluetooth(dto.getBluetooth());
-        television.setAmbiLight(dto.getAmbiLight());
-        television.setOriginalStock(dto.getOriginalStock());
-        television.setSold(dto.getSold());
-
-        return television;
-    }
 }

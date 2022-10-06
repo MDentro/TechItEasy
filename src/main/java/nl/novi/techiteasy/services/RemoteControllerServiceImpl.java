@@ -7,6 +7,9 @@ import nl.novi.techiteasy.models.RemoteController;
 import nl.novi.techiteasy.repositories.RemoteControllerRepository;
 import org.springframework.stereotype.Service;
 
+import static nl.novi.techiteasy.dtos.RemoteControllerDto.fromRemoteController;
+import static nl.novi.techiteasy.dtos.RemoteControllerDto.toRemoteController;
+
 @Service
 public class RemoteControllerServiceImpl implements RemoteControllerService {
 
@@ -24,32 +27,6 @@ public class RemoteControllerServiceImpl implements RemoteControllerService {
 
     }
 
-    @Override
-    public RemoteControllerDto fromRemoteController(RemoteController remoteController) {
-        var dto = new RemoteControllerDto();
-        dto.setId(remoteController.getId());
-        dto.setCompatibleWith(remoteController.getCompatibleWith());
-        dto.setBatteryType(remoteController.getBatteryType());
-        dto.setName(remoteController.getName());
-        dto.setBrand(remoteController.getBrand());
-        dto.setPrice(remoteController.getPrice());
-        dto.setOriginalStock(remoteController.getOriginalStock());
-
-        return dto;
-    }
-
-    @Override
-    public RemoteController toRemoteController(RemoteControllerInputDto dto) {
-        var remoteController = new RemoteController();
-        remoteController.setCompatibleWith(dto.getCompatibleWith());
-        remoteController.setBatteryType(dto.getBatteryType());
-        remoteController.setName(dto.getName());
-        remoteController.setBrand(dto.getBrand());
-        remoteController.setPrice(dto.getPrice());
-        remoteController.setOriginalStock(dto.getOriginalStock());
-
-        return remoteController;
-    }
 
     @Override
     public RemoteControllerDto getRemoteControllerById(Long id) {
