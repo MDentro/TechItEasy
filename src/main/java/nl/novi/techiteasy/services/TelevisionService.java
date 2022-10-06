@@ -3,9 +3,14 @@ package nl.novi.techiteasy.services;
 import nl.novi.techiteasy.dtos.TelevisionDto;
 import nl.novi.techiteasy.dtos.TelevisionInputDto;
 import nl.novi.techiteasy.models.Television;
+
 import java.util.List;
 
 public interface TelevisionService {
+
+    void assignCIModuleToTelevision(Long id, Long input);
+
+    void assignRemoteControllerToTelevision(Long id, Long input);
 
     List<TelevisionDto> getTelevisions();
 
@@ -25,7 +30,5 @@ public interface TelevisionService {
 
     boolean idPresent(Long id);
 
-    TelevisionDto fromTelevision(Television television);
 
-    Television toTelevision(TelevisionInputDto dto);
 }

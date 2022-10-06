@@ -1,5 +1,6 @@
 package nl.novi.techiteasy.controllers;
 
+import nl.novi.techiteasy.dtos.IdInputDto;
 import nl.novi.techiteasy.dtos.TelevisionDto;
 import nl.novi.techiteasy.dtos.TelevisionInputDto;
 import nl.novi.techiteasy.services.TelevisionService;
@@ -47,12 +48,11 @@ public class TelevisionController {
             TelevisionDto tv = televisionService.saveTelevision(televisionInputDto);
             return new ResponseEntity<>(tv, HttpStatus.CREATED);
         }
-
     }
 
     @DeleteMapping("/televisions/{id}")
     public ResponseEntity<Object> deleteTelevision(@PathVariable Long id) {
-      televisionService.deleteTelevision(id);
+        televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -60,5 +60,15 @@ public class TelevisionController {
     public ResponseEntity<Object> updateTelevision(@PathVariable Long id, @RequestBody TelevisionInputDto televisionInputDto) {
         televisionService.updateTelevision(televisionInputDto, id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/televisions/{id}/remotecontroller")
+    public void  assignRemoteControllerToTelevision(@PathVariable("id") Long id, @RequestBody IdInputDto input) {
+       televisionService.assignRemoteControllerToTelevision(id, input.getId());
+    }
+
+    @PutMapping("/televisions/{id}/cimodule")
+    public void  assignCIModuleToTelevision(@PathVariable("id") Long id, @RequestBody IdInputDto input) {
+        televisionService.assignCIModuleToTelevision(id, input.getId());
     }
 }
