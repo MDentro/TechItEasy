@@ -10,3 +10,11 @@ INSERT INTO cimodules ( id, name, price) VALUES (10, 'testcimodule', 50), (11, '
 
 UPDATE televisions SET remote_controller_id=100 WHERE id=1003;
 UPDATE televisions SET ci_module_id=10 WHERE id=1003;
+
+insert into roles(rolename) values ('USER'), ('ADMIN');
+
+INSERT INTO users (username, password, email) VALUES ('user', 'GciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImV4cCI6MTY2NTI3MDE1NSwiaWF0IjoxN', 'user@user.nl');
+INSERT INTO users (username, password, email) VALUES ('admin', 'GciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MyIsImV4cCI6MTY2NTI3MDE1NSwiaWF0IjoxN', 'admin@admin.nl');
+
+INSERT INTO users_roles (users_username, roles_rolename) VALUES ('user', 'USER');
+INSERT INTO users_roles (users_username, roles_rolename) VALUES ('admin', 'ADMIN');

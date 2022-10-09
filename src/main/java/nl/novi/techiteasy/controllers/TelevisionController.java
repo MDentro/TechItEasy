@@ -7,11 +7,12 @@ import nl.novi.techiteasy.services.TelevisionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static nl.novi.techiteasy.util.UtilityMethods.getValidationErrorMessage;
 
 @RestController
 public class TelevisionController {
@@ -37,13 +38,7 @@ public class TelevisionController {
     @PostMapping("/televisions")
     public ResponseEntity<Object> addTelevision(@Valid @RequestBody TelevisionInputDto televisionInputDto, BindingResult br) {
         if (br.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            for (FieldError fe : br.getFieldErrors()) {
-                sb.append(fe.getField() + ": ");
-                sb.append(fe.getDefaultMessage());
-                sb.append("\n");
-            }
-            return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(getValidationErrorMessage(br), HttpStatus.BAD_REQUEST);
         } else {
             TelevisionDto tv = televisionService.saveTelevision(televisionInputDto);
             return new ResponseEntity<>(tv, HttpStatus.CREATED);
