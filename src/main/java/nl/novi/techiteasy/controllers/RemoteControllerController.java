@@ -5,9 +5,12 @@ import nl.novi.techiteasy.dtos.RemoteControllerInputDto;
 import nl.novi.techiteasy.services.RemoteControllerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static nl.novi.techiteasy.util.UtilityMethods.getValidationErrorMessage;
 
 @RestController
 public class RemoteControllerController {
@@ -24,8 +27,12 @@ public class RemoteControllerController {
     }
 
     @PostMapping("remotecontrollers")
-    public ResponseEntity<Object> createRemoteController(@Valid @RequestBody RemoteControllerInputDto remoteControllerInputDto) {
-        RemoteControllerDto remoteController = remoteControllerService.createRemoteController(remoteControllerInputDto);
-        return new ResponseEntity<>(remoteController, HttpStatus.CREATED);
+    public ResponseEntity<Object> createRemoteController(@Valid @RequestBody RemoteControllerInputDto remoteControllerInputDto, BindingResult br) {
+        if (br.hasErrors()) {
+            return new ResponseEntity<>(getValidationErrorMessage(br), HttpStatus.BAD_REQUEST);
+        } else {
+            RemoteControllerDto remoteController = remoteControllerService.createRemoteController(remoteControllerInputDto);
+            return new ResponseEntity<>(remoteController, HttpStatus.CREATED);
+        }
     }
 }
